@@ -1,48 +1,72 @@
-package aug3;
-/*2)Revisit on Lists and work with Comparable and Comparator using both Java7 and Java8 style(lambda(->)) for
-Product(id,name,cost,rating,quantity), perform sorting for different options like byname,bycost, byrating and cost and byquantity.*/
+package aug4;
 
-import java.util.ArrayList;
+//2)Same as task1 but you should only count unique vowel count i.e if a word is having aeeeeee like that so that count of vowel is 2 not 8
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-
-
-
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.*;
 
 public class Task2 {
 
-	private static final int List = 0;
-
 	public static void main(String[] args) {
-		List<Laptop> lap = new ArrayList<>();
-		lap.add(new Laptop(2,300,"a",8.9,1));
-		lap.add(new Laptop(3,400,"b",7.8,2));
-		lap.add(new Laptop(9,900,"j",9.9,3));
-		lap.add(new Laptop(5,600,"d",4.9,8));
-		lap.add(new Laptop(8,700,"d",4.9,8));
-		Collections.sort(lap);
-		Collections.sort(lap,(Laptop l2,Laptop l3)->{
-			if(l2.getCost()>l3.getCost())
-				return 2;
-			else
-				return -2;
-			
-			
-		});
-		Collections collections;
-		Collections.sort(lap,new RatingComparator());
-		System.out.println("laptops sorted by rating:");
-		printLaptop(lap);
-		
-		
-		
+		// TODO Auto-generated method stub
+		String str = "eee hgee aeer";
+		sortString(str);
+	}
+	 static String removeDuplicates(String str)   
+	    {     
+	        //Create LinkedHashSet of type character   
+	        LinkedHashSet<Character> set = new LinkedHashSet<>();   
+	        //Add each character of the string into LinkedHashSet   
+	        for(int i=0;i<str.length();i++)   
+	            set.add(str.charAt(i));   
+	            
+	        // print the string after removing duplicate characters  
+	        String s="";
+	        for(Character ch : set) 
+	        {
+	            s=s+ch;   
+	        }
+	        return s;
+	    }  
+	public static void sortString(String str)
+	{
+		Map<Integer, String> map = new TreeMap<>(Collections.reverseOrder());
+		String p[] = str.split(" ");
+		Arrays.sort(p,Collections.reverseOrder());
+		int l=p.length;
+		String []ar=new String  [l];
+		for(int i=0;i<p.length;i++)
+		{
 	
-
-	}
-	public static void printLaptop(List<Laptop> lap) {
-		for (Laptop b : lap) {
-			System.out.println(b);
+			ar[i]=removeDuplicates(p[i]);
+			int t=0;
+			for(int j=0;j<ar[i].length();j++)
+			{	
+				String s=ar[i];
+				if(s.charAt(j)=='A'||s.charAt(j)=='E'||s.charAt(j)=='I'||s.charAt(j)=='O'||s.charAt(j)=='U'||s.charAt(j)=='a'||s.charAt(j)=='e'||s.charAt(j)=='i'||s.charAt(j)=='o'||s.charAt(j)=='u')
+				{
+					t=t+1;
+				}
+			}
+			//System.out.println(t);
+			if(map.containsKey(t)) {
+				String temp=map.get(t);
+				temp=temp+" "+ar[i];
+				map.put(t, temp);
+			}else {
+				map.put(t, ar[i]);
+			}
 		}
+		System.out.println("map : "+map);
+		StringBuilder sb=new StringBuilder();
+		for(Entry<Integer, String> e:map.entrySet()) {
+			sb.append(e.getValue()).append(" ");
+		}
+		System.out.println( sb.toString().trim());
 	}
+	
 
 }

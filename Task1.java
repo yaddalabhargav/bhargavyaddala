@@ -1,70 +1,52 @@
-package aug3;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
-/*1)Recreate exception handling, create your own custom exceptions(checked and unchecked) with Business and Presentation Layer
-handle the exceptions for validating email or password or aadhar number or DL number.
-2)Revisit on Lists and work with Comparable and Comparator using both Java7 and Java8 style(lambda(->)) for
-Product(id,name,cost,rating,quantity), perform sorting for different options like byname,bycost, byrating and cost and byquantity.
-3)Work on Queue interface, do research and get the difference between LinkedList and PriorityQueue with code example
-also do check on blocking and non blocking Queue, based on your interest go ahead and also explore Dequeue interface if you wish to.
-4)Work with Set Interface for the same object created in Task2 and eliminate duplicates in it.*/
+package aug4;
+//1)Arrange the sentence by words with the word which is having highest vowel count first and followed by rest, if two or more words have same vowel count then arrange it reverse alphabetical order
 
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 public class Task1 {
 
-
-			public static void main(String[] args)  {
-				
-				
-				Bussinessvalid b1=new Bussinessvalid();
-				
-			      
-			    
-			  			
-					try {
-						if(b1.isValidEmail("pratyusha@gmail.in")) {
-							System.out.println("eMAIL VALIDATED");
-						}
-					} catch (InvalidEmailException e1) {
-						// TODO Auto-generated catch block
-						System.out.println(e1.getMessage());
-					}
-					
-			//	} catch (InvalidAgeException e) {
-				//	System.out.println(e.getMessage());
-				//}
-				
-				
-				try {
-					if(b1.isValidPassword("ABCDE1222Q")) {
-						System.out.println("Password Validated");}
-				} catch (InvalidPassException e) {
-					// TODO Auto-generated catch block
-					System.out.println(e.getMessage());
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String str = "hey hello everyone its getting complicated right that's why we should wrap up the tasks given on same day but we rarely stick to it sad";
+        sortString(str);
+	}
+	public static void sortString(String str)
+	{
+		Map<Integer, String> map = new TreeMap<>(Collections.reverseOrder());
+		String ar[] = str.split(" ");
+		Arrays.sort(ar,Collections.reverseOrder());
+		for(int i=0;i<ar.length;i++)
+		{
+			int t=0;
+			for(int j=0;j<ar[i].length();j++)
+			{	
+				String s=ar[i];
+				if(s.charAt(j)=='A'||s.charAt(j)=='E'||s.charAt(j)=='I'||s.charAt(j)=='O'||s.charAt(j)=='U'||s.charAt(j)=='a'||s.charAt(j)=='e'||s.charAt(j)=='i'||s.charAt(j)=='o'||s.charAt(j)=='u')
+				{
+					t=t+1;
 				}
-				
-						try {
-							if(b1.isValidAdhar("987733323278")) {
-								System.out.println("Adhar Validated");}
-						} catch (InvalidAdharException e) {
-							// TODO Auto-generated catch block
-							System.out.println(e.getMessage());
-						}
-					
-				//}catch(InvalidPanException e){
-					//System.out.println(e.getMessage());
-				//}
-
-			
-					}
-		
-
+			}
+			//System.out.println(t);
+			if(map.containsKey(t)) {
+				String temp=map.get(t);
+				temp=temp+" "+ar[i];
+				map.put(t, temp);
+			}else {
+				map.put(t, ar[i]);
+			}
+		}
+		System.out.println("map : "+map);
+		StringBuilder sb=new StringBuilder();
+		for(Entry<Integer, String> e:map.entrySet()) {
+			sb.append(e.getValue()).append(" ");
+		}
+		System.out.println( sb.toString().trim());
+	}
 	
 
-	}
-
-
+}
