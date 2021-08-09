@@ -1,69 +1,37 @@
-package aug4;
+package aug5;
 
-/* 1) Explore on methods like wait,notify,notifyAll
-       2) Explore on why wait,notify and notifyAll are in Object class not Thread class
-       3) Explore and implement on Producer - Consumer Problem with Threads.*/
-import java.util.Random;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
-public class Task3{
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-	//Shared Queue
-	private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
-	
-	public static void main(String[] args) throws InterruptedException {
+public class Task3 {
 
-		//Producer Thread
-		Thread producerThread = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					producer();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		try {
+				
+   FileInputStream in= new FileInputStream("D:\\revature.jpg");
+   FileOutputStream o = new FileOutputStream("D:\\new.jpg");
+   BufferedInputStream B=new BufferedInputStream(in);
+   BufferedOutputStream Bo= new BufferedOutputStream(o);
+   
+   int a =0;
+   while(a!=-1) {
+	   a=B.read();
+	   Bo.write(a);
+   }
+   B.close();
+   Bo.close();
+		}
+		 catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		});
-		
-		//Consumer Thread
-		Thread consumerThread= new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				try {
-					consumer();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		producerThread.start();
-		consumerThread.start();
 	}
 
-	private static void producer() throws InterruptedException{
-		Random random= new Random();
-		while (true) {
-			Thread.sleep(2000);
-			int produced = random.nextInt(100);
-			queue.put(produced);
-			System.out.println("Produced:"+produced);
-		}
-	}
-	
-	private static void consumer() throws InterruptedException{
-		while (true) {
-				Thread.sleep(2000);
-				Integer consumed = queue.take();
-				System.out.println("Consumed:"+consumed);
-			}
-		}
 }

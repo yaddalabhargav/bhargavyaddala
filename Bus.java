@@ -1,8 +1,6 @@
-package aug3;
+package aug5;
 
-import java.util.Objects;
-
-public class Bus {
+public class Bus implements Comparable<Bus> {
 
 	private int id;
 	private String providerName;
@@ -59,22 +57,10 @@ public class Bus {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	public int compareTo(Bus o) {
+		Integer i1=this.id;
+		Integer i2=o.id;
+		return i1.compareTo(i2);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Bus other = (Bus) obj;
-		return id == other.id;
-	}
-
-
 	
 }
